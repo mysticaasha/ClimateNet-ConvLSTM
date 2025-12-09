@@ -48,11 +48,80 @@ The goal is to predict future climate-variable maps using a sequence of past map
 
 ## Dataset
 
-We use variables from the ERA5 Reanalysis dataset such as:
-- **2m temperature**
-- **Total precipitation**
-- **Short-wave radiation**
-- **Volumetric soil water (layers 1–4)**
-- **Wind speed components (u10, v10)**
+This project uses **ERA5-Land** reanalysis data from the Copernicus Climate Data Store (CDS). ERA5-Land provides high-resolution (0.1° x 0.1°) gridded climate variables suitable for land and hydrological applications.  
+The dataset used here is **spatiotemporal**: it contains multiple climate variables over time, forming a 4-dimensional tensor structure:
+(time, variable, latitude, longitude)
 
-Dataset is downloaded via the CDS API (Copernicus).
+### Data Sources
+
+The raw data is downloaded as **GRIB** files from CDS and then converted to **NetCDF** format for easier processing using Xarray.
+
+The project uses the following ERA5-Land variables (customizable):
+- **2m Temperature (t2m)**
+- **Total precipitation (tp)**
+- **Volumetric soil water layer 1 (swvl1)**
+- **Surface net solar radiation (ssr)**  
+…and more can be added as needed.
+
+### Temporal Characteristics
+
+ERA5-Land data provides:
+- **Hourly temporal resolution**
+- A **continuous time series**, typically covering:
+  - Date range (example): `2010-01-01` → `2024-01-01`
+  - Time increments: **1 hour**
+- Each sample is tagged by:
+  - `year`
+  - `month`
+  - `day`
+  - `hour`
+  - `timestamp index`
+
+This metadata is automatically encoded and stored inside the processed dataset.
+
+### Spatial Characteristics
+
+The data represents a **fixed spatial grid**:
+- **Latitude range**: user-selected region (e.g., 48°N → 52°N)
+- **Longitude range**: user-selected region (e.g., 22°E → 26°E)
+- **Grid resolution**: 0.1° (approx. 9 km)
+
+Each variable is therefore a 2D map per time step:
+(variable_count, height, width)
+
+### Data Sources
+
+The raw data is downloaded as **GRIB** files from CDS and then converted to **NetCDF** format for easier processing using Xarray.
+
+The project uses the following ERA5-Land variables (customizable):
+- **2m Temperature (t2m)**
+- **Total precipitation (tp)**
+- **Volumetric soil water layer 1 (swvl1)**
+- **Surface net solar radiation (ssr)**  
+…and more can be added as needed.
+
+### Temporal Characteristics
+
+ERA5-Land data provides:
+- **Hourly temporal resolution**
+- A **continuous time series**, typically covering:
+  - Date range (example): `2010-01-01` → `2024-01-01`
+  - Time increments: **1 hour**
+- Each sample is tagged by:
+  - `year`
+  - `month`
+  - `day`
+  - `hour`
+  - `timestamp index`
+
+This metadata is automatically encoded and stored inside the processed dataset.
+
+### Spatial Characteristics
+
+The data represents a **fixed spatial grid**:
+- **Latitude range**: user-selected region (e.g., 48°N → 52°N)
+- **Longitude range**: user-selected region (e.g., 22°E → 26°E)
+- **Grid resolution**: 0.1° (approx. 9 km)
+
+Each variable is therefore a 2D map per time step:
+(variable_count, height, width)
