@@ -28,23 +28,6 @@ The goal of this project is to build a model that can:
 
 **Given a sequence of past climate fields (e.g., the last 24 hours), predict the next climate field (t + 1 hour).**
 
-More formally:
-
-- Let \( X_t \in \mathbb{R}^{V \times H \times W} \) be the set of climate variables at time \( t \)
-- Let the input sequence be:
-  \[
-  \mathbf{X} = (X_{t-L+1}, \dots, X_{t})
-  \]
-  where \( L \) is the sequence length (history window)
-- The goal is to learn a function \( F \) such that:
-  \[
-  \hat{X}_{t+1} = F(\mathbf{X})
-  \]
-
-Where:
-- \( V \) = number of variables  
-- \( H, W \) = grid height and width  
-
 This is framed as a **supervised spatiotemporal forecasting problem**, commonly applied to:
 - climate and weather nowcasting  
 - hydrology  
