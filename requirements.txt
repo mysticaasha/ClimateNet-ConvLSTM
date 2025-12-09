@@ -1,0 +1,11 @@
+xarray
+netCDF4
+cfgrib
+eccodes
+pandas
+numpy
+torch
+torchvision
+tqdm
+matplotlib
+scikit-learn
