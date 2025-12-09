@@ -46,13 +46,13 @@ The goal is to predict future climate-variable maps using a sequence of past map
 ---
 
 
-🔧 Dataset
+## Dataset
 
 We use variables from the ERA5 Reanalysis dataset such as:
-	•	2m temperature
-	•	Total precipitation
-	•	Short-wave radiation
-	•	Volumetric soil water (layers 1–4)
-	•	Wind speed components (u10, v10)
+- **2m temperature**
+- **Total precipitation**
+- **Short-wave radiation**
+- **Volumetric soil water (layers 1–4)**
+- **Wind speed components (u10, v10)**
 
 Dataset is downloaded via the CDS API (Copernicus).
