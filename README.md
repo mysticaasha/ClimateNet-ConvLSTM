@@ -20,28 +20,93 @@ The goal is to predict future climate-variable maps using a sequence of past map
 
 ---
 
-## 🚀 Features
+## Problem Definition
 
-### ✔ Fully automated preprocessing pipeline
-- Unzipping downloaded ERA5 files  
-- GRIB extraction  
-- GRIB → NetCDF conversion  
-- Merging multiple variables  
-- Unit conversions  
-- Daily aggregation  
-- Train/Validation/Test splitting  
-- Sliding window generation  
+Earth system processes are inherently **spatiotemporal**: climate variables evolve over space and time in ways that are nonlinear, multiscale, and highly dependent on past conditions. Traditional statistical models often fail to capture these dynamics, especially when dealing with high-resolution gridded datasets.
 
-### ✔ Deep Learning Architecture
-- ConvLSTM layers for sequence modeling  
-- CNN decoder for spatial prediction  
-- PyTorch implementation  
-- Best-model checkpointing  
+The goal of this project is to build a model that can:
 
-### ✔ Evaluation Tools
-- RMSE, MAE, MAPE, R²  
-- Spatial error heatmaps  
-- Prediction vs Ground Truth plots  
+**Given a sequence of past climate fields (e.g., the last 24 hours), predict the next climate field (t + 1 hour).**
+
+More formally:
+
+- Let \( X_t \in \mathbb{R}^{V \times H \times W} \) be the set of climate variables at time \( t \)
+- Let the input sequence be:
+  \[
+  \mathbf{X} = (X_{t-L+1}, \dots, X_{t})
+  \]
+  where \( L \) is the sequence length (history window)
+- The goal is to learn a function \( F \) such that:
+  \[
+  \hat{X}_{t+1} = F(\mathbf{X})
+  \]
+
+Where:
+- \( V \) = number of variables  
+- \( H, W \) = grid height and width  
+
+This is framed as a **supervised spatiotemporal forecasting problem**, commonly applied to:
+- climate and weather nowcasting  
+- hydrology  
+- renewable energy forecasting  
+- soil conditions and agriculture  
+
+By training on historical ERA5-Land data, the model learns how climate variables evolve, allowing it to generate accurate short-term predictions.
+
+---
+
+## Model Description
+
+The model used in this project is a **ConvLSTM** (Convolutional Long Short-Term Memory) neural network. ConvLSTMs are specifically designed for **spatiotemporal sequence modeling**, making them ideal for climate data.
+
+### Why ConvLSTM?
+
+Classic LSTMs flatten spatial grids and therefore lose important spatial relationships.  
+ConvLSTM fixes this by replacing the linear operations in LSTM with **2D convolutions**, enabling the cell to:
+
+- track local spatial patterns  
+- preserve grid structure  
+- learn motion and evolution over time  
+- model both short-term and long-term dependencies  
+
+### Model Architecture (Simplified)
+Input Sequence → ConvLSTM Layer(s) → 3D Hidden State → 1×1 Convolution → Output Grid
+The implemented model consists of:
+
+1. **ConvLSTM Layer**
+   - Input shape:
+     ```
+     (batch_size, seq_len, num_variables, H, W)
+     ```
+   - Hidden state retains spatial dimensions.
+   - Learns temporal transitions of local spatial patterns.
+
+2. **Final 1×1 Convolution**
+   - Converts hidden channels back to the original variable count.
+   - Produces:
+     ```
+     (num_variables, H, W)
+     ```
+
+3. **Loss Function**
+   - Mean Squared Error (MSE), suitable for continuous-valued fields.
+
+4. **Optimization**
+   - Adam optimizer with learning rate scheduling.
+
+### Strengths of This Model
+
+- Maintains spatial resolution at all steps  
+- Captures spatiotemporal dependencies efficiently  
+- Handles multiple climate variables simultaneously  
+- Performs well even on moderate hardware  
+
+### Limitations
+
+- Computationally heavier than simple LSTMs  
+- Forecasts only one step ahead (extendable)  
+- Performance depends on careful normalization and preprocessing  
+
 
 ---
 
