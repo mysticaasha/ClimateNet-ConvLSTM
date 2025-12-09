@@ -1,47 +1,51 @@
 # ClimateNet-ConvLSTM
-Deep Spatio-Temporal Climate Forecasting using ConvLSTM + CNN on ERA5 Reanalysis Data
-This project builds a basic deep learning pipeline for climate-variable forecasting using ERA5 and a ConvLSTM-based neural network.
-It handles data extraction → preprocessing → modeling → evaluation.
+**Deep Spatio-Temporal Climate Forecasting using ConvLSTM + CNN on ERA5 Reanalysis Data**
 
-🌍 Project Overview
+This project implements a complete deep-learning pipeline for forecasting climate variables from gridded spatio-temporal data.  
+It includes data extraction, preprocessing, model training, evaluation, and visualization.
 
-Climate change analysis requires models that understand both space and time.
-This project predicts climate variables (e.g., temperature, precipitation) from gridded spatio-temporal data.
+---
 
-We use:
-	•	ERA5 Reanalysis (ECMWF)
-	•	GRIB → NetCDF processing
-	•	Spatial+temporal deep learning architecture (ConvLSTM + CNN)
-	•	Sliding-window forecasting
-	•	PyTorch training pipeline
+## 🌍 Project Overview
 
-🚀 Features
+Climate forecasting requires models that capture both **spatial patterns** and **temporal evolution**.  
+This project uses:
 
-✔ Fully automated preprocessing
-	•	Unzip GRIB
-	•	Extract variables
-	•	Convert GRIB → NetCDF
-	•	Merge different variables
-	•	Unit conversions
-	•	Daily resampling
-	•	Train/Val/Test split
-	•	Sliding window creation
+- **ERA5 Reanalysis data (ECMWF)**
+- **GRIB → NetCDF conversion**
+- **Sliding-window forecasting**
+- **A hybrid ConvLSTM + CNN architecture**
 
-✔ ConvLSTM deep learning model
-	•	Learns temporal sequences
-	•	Captures spatial climate structure
-	•	Predicts future maps from past frames
+The goal is to predict future climate-variable maps using a sequence of past maps.
 
-✔ Training with:
-	•	MSE loss
-	•	Learning rate scheduler
-	•	Automatic checkpointing
-	•	Best-model saving
-	•	GPU/CPU compatible
+---
 
-✔ Evaluation tools
-	•	RMSE, MAE, MAPE, R²
-	•	Visualization of predictions vs ground truth
+## 🚀 Features
+
+### ✔ Fully automated preprocessing pipeline
+- Unzipping downloaded ERA5 files  
+- GRIB extraction  
+- GRIB → NetCDF conversion  
+- Merging multiple variables  
+- Unit conversions  
+- Daily aggregation  
+- Train/Validation/Test splitting  
+- Sliding window generation  
+
+### ✔ Deep Learning Architecture
+- ConvLSTM layers for sequence modeling  
+- CNN decoder for spatial prediction  
+- PyTorch implementation  
+- Best-model checkpointing  
+
+### ✔ Evaluation Tools
+- RMSE, MAE, MAPE, R²  
+- Spatial error heatmaps  
+- Prediction vs Ground Truth plots  
+
+---
+
+
 🔧 Dataset
 
 We use variables from the ERA5 Reanalysis dataset such as:
